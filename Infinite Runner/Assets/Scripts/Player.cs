@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     [Tooltip("This gives us X amount of time after leaving wall to wall jump")] [SerializeField] float wallJumpTime = .2f;
     [SerializeField] float wallJumpDur = .4f;
     [SerializeField] Vector2 wallJumpPower = new Vector2(8f, 16f);
+
+    [Header("Shooting vars")]
+    [SerializeField] GameObject projToShoot;
     
     /* PRIVATE VARS */
 
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour
     private float horizontal;
     private Rigidbody2D rb;
     private int jumpsLeft;
+    private float startingGravity;
 
     // wall jumping vars
     private bool isWallJumping = false;
@@ -35,12 +39,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        startingGravity = rb.gravityScale;
         jumpsLeft = amountOfJumps;
     }
 
     private void Update()
     {
         MoveLogic();
+        ShootLogic();
 
         WallSlide();
         WallJump();
@@ -49,22 +55,35 @@ public class Player : MonoBehaviour
             Flip();
     }
 
+    private void ShootLogic()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // charge proj
+            Instantiate(projToShoot, wallCheck.transform.position, Quaternion.identity);
+        }
+    }
     private void MoveLogic()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * rb.gravityScale);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpsLeft--;
         }
         else if (Input.GetKeyDown(KeyCode.Space) && jumpsLeft > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce * rb.gravityScale * secondaryJumpModifiers);
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce * secondaryJumpModifiers);
             jumpsLeft--;
         }
         if (IsGrounded())
         {
             jumpsLeft = amountOfJumps;
+            rb.gravityScale = 0;
+        }
+        else
+        {
+            rb.gravityScale = startingGravity;
         }
     }
 

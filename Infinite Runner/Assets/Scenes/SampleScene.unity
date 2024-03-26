@@ -123,6 +123,55 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &45045484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45045486}
+  - component: {fileID: 45045485}
+  m_Layer: 0
+  m_Name: BlockSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &45045485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45045484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c2c38514341cd47b0ec76ac69f08d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockObjs:
+  - {fileID: 1554128564113318200, guid: aac6a01a45d32234185dcea579af5139, type: 3}
+  startingSpawnTime: 2
+  ySpawnPos: 6
+  xSpawnRange: 8.5
+--- !u!4 &45045486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45045484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &380747322
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +198,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380747322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.037364304, y: -4.7907596, z: 0}
-  m_LocalScale: {x: 20, y: 1, z: 5}
+  m_LocalPosition: {x: -7.7699, y: -4.7907596, z: 0}
+  m_LocalScale: {x: 4.534, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2134367179}
@@ -407,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &570572500
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -635,7 +684,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  jumpForce: 2
+  jumpForce: 30
   amountOfJumps: 2
   secondaryJumpModifiers: 0.85
   wallSlideSpeed: 2
@@ -643,14 +692,15 @@ MonoBehaviour:
   wallCheck: {fileID: 1670860698}
   groundLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 448
   wallLayers:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 384
   autoHorizontal: 0
   wallJumpTime: 0.2
   wallJumpDur: 0.4
   wallJumpPower: {x: 8, y: 25}
+  projToShoot: {fileID: 6260748140014479018, guid: 817b44c8b1b879d4ea9e72ad7d8e2f3f, type: 3}
 --- !u!50 &1359416581
 Rigidbody2D:
   serializedVersion: 4
@@ -676,7 +726,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &1359416582
 BoxCollider2D:
@@ -783,7 +833,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1359416579}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6577027, y: -2.4416852, z: 0}
+  m_LocalPosition: {x: -7.47, y: -2.4416852, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
