@@ -3,32 +3,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Text scoreText;
     int actualScore;
     int displayedScore;
 
-    float time;
-    int intTime;
+
+    string end = "End Screen";
+
+    [SerializeField] Text highScore;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         StartCoroutine(MyAlwaysRunningScoreUpdater());
-        StartCoroutine(MyAlwaysRunningScoreIncreaser());
+        if(end != SceneManager.GetActiveScene().name)
+        {
+            StartCoroutine(MyAlwaysRunningScoreIncreaser());
+            PlayerPrefs.SetInt("Score", 0);
+        }
+       
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = displayedScore.ToString();
+        highScore.text = "HIGH SCORE: " + PlayerPrefs.GetInt("HighScore").ToString();
+        if(end != SceneManager.GetActiveScene().name) 
+        {
+            scoreText.text = displayedScore.ToString();
+        }
+        else
+        {
+            scoreText.text = PlayerPrefs.GetInt("Score").ToString();
+        }
+        
+        //GAME OVER
+        if(Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            SceneManager.LoadScene("End Screen");
+            PlayerPrefs.SetInt("Score", actualScore);
+            if(PlayerPrefs.GetInt("Score") > PlayerPrefs.GetInt("HighScore"))
+            {
+                PlayerPrefs.SetInt("HighScore", actualScore);
+            }
+        }
         
     }
 
     public int ReturnScore() 
     { 
         return actualScore;
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("SoyScene");
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator MyAlwaysRunningScoreIncreaser()
