@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] LayerMask groundLayers, wallLayers;
 
     [Header("Wall jump vars")]
+    [Tooltip("if this is true, the players horizontal input won't affect wallJump")] [SerializeField] bool autoHorizontal = false;
     [Tooltip("This gives us X amount of time after leaving wall to wall jump")] [SerializeField] float wallJumpTime = .2f;
     [SerializeField] float wallJumpDur = .4f;
     [SerializeField] Vector2 wallJumpPower = new Vector2(8f, 16f);
@@ -44,7 +45,7 @@ public class Player : MonoBehaviour
         WallSlide();
         WallJump();
 
-        if(!isWallJumping)
+        if(!isWallJumping || !autoHorizontal)
             Flip();
     }
 
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isWallJumping)
+        if (!isWallJumping || !autoHorizontal)
             rb.velocity = new Vector2(horizontal * moveSpeed, rb.velocity.y);
     }
 
@@ -122,7 +123,10 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space) && wallJumpCounter > 0)
         {
             isWallJumping = true;
-            rb.velocity = new Vector2(wallJumpDir * wallJumpPower.x, wallJumpPower.y);
+            if(autoHorizontal)
+                rb.velocity = new Vector2(wallJumpDir * wallJumpPower.x, wallJumpPower.y);
+            else
+                rb.velocity = new Vector2(rb.velocity.x, wallJumpPower.y);
             wallJumpCounter = 0f;
 
             if(transform.localScale.x != wallJumpDir)

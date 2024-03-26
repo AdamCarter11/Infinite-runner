@@ -647,9 +647,10 @@ MonoBehaviour:
   wallLayers:
     serializedVersion: 2
     m_Bits: 128
+  autoHorizontal: 0
   wallJumpTime: 0.2
   wallJumpDur: 0.4
-  wallJumpPower: {x: 8, y: 16}
+  wallJumpPower: {x: 8, y: 25}
 --- !u!50 &1359416581
 Rigidbody2D:
   serializedVersion: 4
