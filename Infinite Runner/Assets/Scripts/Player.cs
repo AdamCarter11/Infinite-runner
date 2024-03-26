@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
 
     [Header("Shooting vars")]
     [SerializeField] GameObject projToShoot;
+    [SerializeField] int maxBounces = 2;
     
     /* PRIVATE VARS */
 
@@ -35,6 +36,9 @@ public class Player : MonoBehaviour
     private bool isWallJumping = false;
     private float wallJumpDir;
     private float wallJumpCounter;
+
+    // proj vars
+    private int bounces = 0;
 
     private void Start()
     {
@@ -60,7 +64,16 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // charge proj
-            Instantiate(projToShoot, wallCheck.transform.position, Quaternion.identity);
+            GameObject tempProj = Instantiate(projToShoot, wallCheck.transform.position + new Vector3(.5f * transform.localScale.x, 0,0), Quaternion.identity);
+            tempProj.GetComponent<Projectile>().SetBounces(bounces);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            bounces++;
+            if(bounces > maxBounces)
+            {
+                bounces = 0;
+            }
         }
     }
     private void MoveLogic()
